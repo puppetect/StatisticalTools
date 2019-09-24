@@ -9,8 +9,7 @@ public class AHPAnalyzer implements Analyzer {
 	public AnalysisOutput analyze(double[][] arr) {
 		System.out.println("INPUTMATRIX");
 		printMatrix(arr);
-		Normalizer normalizer = new SumScaleNormalizer();
-		double[][] normalizedMatrix = transpose(normalizer.normalize(transpose(arr)));
+		double[][] normalizedMatrix = transpose(normalize(transpose(arr)));
 		System.out.println("NORMALIZEDMATRIX");
 		printMatrix(normalizedMatrix);
 		double[] sumOfRow = new double[normalizedMatrix.length];
@@ -122,5 +121,23 @@ public class AHPAnalyzer implements Analyzer {
 	        }
 	    }
 	    return ret;
+	}
+	
+	public double[][] normalize(double[][] arr) {
+		double[] sumOfRows = new double[arr.length];
+		for(int i=0; i<arr.length; i++) {
+			double sum = 0;
+			for (int j=0; j<arr[0].length; j++) {
+				sum += arr[i][j];
+			}
+			sumOfRows[i] = sum;
+		}
+		System.out.println("");
+		for(int i=0; i<arr.length; i++) {
+			for(int j=0; j<arr[0].length; j++) {
+				arr[i][j] = arr[i][j] / sumOfRows[i];
+			}
+		}
+		return arr;
 	}
 }

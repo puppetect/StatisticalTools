@@ -1,5 +1,5 @@
 package com.ctck.analysis.normalizer;
 
 public interface Normalizer {
-	double[][] normalize(double[][] arr);
+	double[][] normalize(double[][] arr, int axis);
 }
