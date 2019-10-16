@@ -11,21 +11,21 @@ import com.ctck.analysis.normalizer.SumScaleNormalizer;
 public class AHPAnalyzer implements Analyzer {
 	private double[] RI = new double[] {0, 0, 0, 0.58, 0.9, 1.12, 1.24, 1.32, 1.41, 1.46, 1.49, 1.52, 1.54, 1.56, 1.58, 1.59};
 	public Map<String, Object> analyze(double[][]... arr) {
-		//æŒ‡æ ‡çŸ©é˜µ
+		//Ö¸±ê¾ØÕó
 		double[][] criteriaInput = arr[0];
-		//æ–¹æ¡ˆçŸ©é˜µç»„
+		//·½°¸¾ØÕó×é
 		double[][][] alternativesInput = Arrays.copyOfRange(arr, 1, arr.length);
 		
-		//æŒ‡æ ‡çŸ©é˜µæ­£åˆ™åŒ–
+		//Ö¸±ê¾ØÕóÕıÔò»¯
 		double[][] normalizedCriteria = transpose(sumScale(transpose(criteriaInput)));
 		printMatrix("NORMALIZEDMATRIX", normalizedCriteria);
 		
-		//æŒ‡æ ‡ç‰¹å¾å‘é‡
+		//Ö¸±êÌØÕ÷ÏòÁ¿
 		double[] criteriaW = getEigenVector(normalizedCriteria);
 
 		printVector("W", criteriaW);
 		
-		//æŒ‡æ ‡æœ€å¤§ç‰¹å¾æ ¹
+		//Ö¸±ê×î´óÌØÕ÷¸ù
 		double maxEigen = 0;
 		double[] BW = matrixProductVector(criteriaInput, criteriaW);
 		int n = criteriaInput.length;
@@ -33,7 +33,7 @@ public class AHPAnalyzer implements Analyzer {
 			maxEigen += BW[i]/(n * criteriaW[i]);
 		}
 		
-		//æŒ‡æ ‡éšæœºä¸€è‡´æ€§æ¯”ç‡
+		//Ö¸±êËæ»úÒ»ÖÂĞÔ±ÈÂÊ
 		Double CI = (maxEigen - n)/(n - 1);
 		Double CR = CI/RI[n];
 		
@@ -42,7 +42,7 @@ public class AHPAnalyzer implements Analyzer {
 		System.out.println("CI: " + CI);
 		System.out.println("CR: "+CR);
 		
-		//å„æŒ‡æ ‡çš„æ–¹æ¡ˆç‰¹å¾çŸ©é˜µ
+		//¸÷Ö¸±êµÄ·½°¸ÌØÕ÷¾ØÕó
 		double[][] alternativesMatrix = new double[alternativesInput.length][alternativesInput[0].length];
 		for (int i=0; i<alternativesInput.length; i++){
 			double[][] normalizedAlternatives = transpose(sumScale(transpose(alternativesInput[i])));
@@ -58,7 +58,7 @@ public class AHPAnalyzer implements Analyzer {
 		}
 		printMatrix("SCOREMATRIX", scoreMatrix);
 		
-		//å„æ–¹æ¡ˆå¾—åˆ†
+		//¸÷·½°¸µÃ·Ö
 		double [] scores = getSumOfRows(scoreMatrix);
 		printVector("SCORES", scores);
 		
