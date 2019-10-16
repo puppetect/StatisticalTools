@@ -1,5 +1,7 @@
 package com.ctck.analysis;
 
+import java.util.Map;
+
 import com.ctck.analysis.analyser.AHPAnalyzer;
 import com.ctck.analysis.analyser.Analyzer;
 import com.ctck.analysis.analyser.GRAAnalyzer;
@@ -36,46 +38,39 @@ public class App
 			{2, 2, 2, 3, 1, 1}
 			};
 		double[][] score1 = new double[][] {
-			{1, 1/4, 1/2},
+			{1, (float)1/4, (float)1/2},
 			{4, 1, 3},
-			{2, 1/3, 1}
+			{2, (float)1/3, 1}
 		};
 		double[][] score2 = new double[][] {
-			{1, 1/4, 1/5},
-			{4, 1, 1/2},
+			{1, (float)1/4, (float)1/5},
+			{4, 1, (float)1/2},
 			{5, 2, 1}
 		};
 		double[][] score3 = new double[][] {
-			{1, 3, 1/5},
-			{1/3, 1, 1},
+			{1, 3, (float)1/5},
+			{(float)1/3, 1, 1},
 			{5, 1, 1}
 		};
 		double[][] score4 = new double[][] {
-			{1, 1/3, 5},
+			{1, (float)1/3, 5},
 			{3, 1, 7},
-			{1/5, 1/7, 1}
+			{(float)1/5, (float)1/7, 1}
 		};
 		double[][] score5 = new double[][] {
 			{1, 1, 7},
 			{1, 1, 7},
-			{1/7, 1/7, 1}
+			{(float)1/7, (float)1/7, 1}
 		};
 		double[][] score6 = new double[][] {
 			{1, 7, 9},
-			{1/7, 1, 5},
-			{1/9, 1/5, 1}
+			{(float)1/7, 1, 5},
+			{(float)1/9, (float)1/5, 1}
 		};
 		Analyzer AHP = new AHPAnalyzer();
-		AnalysisOutput ahpo = AHP.analyze(criteria);
+		Map<String, Object> ahpo = AHP.analyze(criteria, score1, score2, score3, score4, score5, score6);
+		
     }
     
-    private static void printMatrix(double[][] arr) {
-		for (int i=0; i < arr.length; i++) {
-			for (int j=0; j < arr[0].length; j++) {
-				System.out.print(String.format("%.2f", arr[i][j]) + " | ");
-			}
-			
-		System.out.print("\n");
-		}
-	}
+
 }

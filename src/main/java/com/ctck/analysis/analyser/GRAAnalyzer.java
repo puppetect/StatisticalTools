@@ -1,28 +1,33 @@
 package com.ctck.analysis.analyser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.ctck.analysis.model.AnalysisOutput;
 
 public class GRAAnalyzer implements Analyzer {
 
 	static double rho = 0.5;
 	
-	public AnalysisOutput analyze(double[][] arr) {
+	public Map<String, Object> analyze(double[][]... arr) {
+		double[][] matrixInput = arr[0];
 		//每个项目的每个指标得分和满分比较，得出各项目得分
 		double[] refRow = new double[] {9, 9, 9, 9, 8, 9, 9};
-		double[] vectorOutput = singleGRA(arr, refRow);
+		double[] vectorOutput = singleGRA(matrixInput, refRow);
 		//每个指标作为参考值和其他指标比较，得出关联度
-		double[][] matrixTransposed = transpose(arr);
-		double[][] matrixOutput = new double[arr[0].length][arr.length];
+		double[][] matrixTransposed = transpose(matrixInput);
+		double[][] matrixOutput = new double[matrixInput[0].length][matrixInput.length];
 		for(int i=0; i<matrixTransposed.length; i++) {
+			double[][] matrixCopy = copy(matrixTransposed);
 			double[] refVector = matrixTransposed[i];
-			double[] tempVector = singleGRA(matrixTransposed, refVector);
+			double[] tempVector = singleGRA(matrixCopy, refVector);
 			matrixOutput[i] = tempVector;
 		}
 		
-		AnalysisOutput ao = new AnalysisOutput();
-		ao.setVector(vectorOutput);
-		ao.setMatrix(matrixOutput);
-		return ao;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vector", vectorOutput);
+		map.put("matrix", matrixOutput);
+		return map;
 	}
 	
 	public double[] singleGRA(double[][] arr, double[] ref) {
@@ -74,6 +79,17 @@ public class GRAAnalyzer implements Analyzer {
 	    return ret;
 	}
 	
-	
+	public double[][] copy(double arr[][]){
+	    int m = arr.length;
+	    int n = arr[0].length;
+	    double ret[][] = new double[m][n];
+
+	    for (int i = 0; i < m; i++) {
+	        for (int j = 0; j < n; j++) {
+	            ret[i][j] = arr[i][j];
+	        }
+	    }
+	    return ret;
+	}
 
 }

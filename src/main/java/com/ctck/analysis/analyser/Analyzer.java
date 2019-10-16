@@ -1,7 +1,9 @@
 package com.ctck.analysis.analyser;
 
+import java.util.Map;
+
 import com.ctck.analysis.model.AnalysisOutput;
 
 public interface Analyzer {
-	AnalysisOutput analyze(double[][] arr);
+	Map<String, Object> analyze(double[][]... arr);
 }
